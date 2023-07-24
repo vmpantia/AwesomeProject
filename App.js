@@ -1,12 +1,19 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { Alert, Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert, Button, StatusBar, StyleSheet, Text, TextInput, View } from 'react-native';
+import TextField from './components/TextField';
+import PageHeader from './components/PageHeader';
+import PageBody from './components/PageBody';
+import ButtonField from './components/ButtonField';
 
 export default function App() {
-  const [text, onChangeText] = useState('');
+  const [userInfo, setUserInfo] = useState({
+    firstName: '',
+    middleName: '',
+    lastName: ''
+  });
 
   const onPressLearnMore = () => {
-    Alert.alert('Alert Title', text, [
+    Alert.alert('Alert Title', userInfo.firstName, [
       {
         text: 'Cancel',
         onPress: () => console.log('Cancel Pressed'),
@@ -15,41 +22,28 @@ export default function App() {
       {text: 'OK', onPress: () => console.log('OK Pressed')},
     ]);
   }
+
+  const onValueChange = (field, value) => {
+    setUserInfo(data => {
+      return {...data, [field]: value}
+    });
+  }
   return (
     <View style={styles.container}>
-
-      <TextInput
-        style={styles.input}
-        onChangeText={onChangeText}
-        value={text}
-        placeholder="useless placeholder"
-        keyboardType="numeric"
-      />
-      <Text>Open up App.js to start working on your app epal ka bonak! editowsss</Text>
-      <StatusBar style="auto" />
-
-      <Button
-        onPress={onPressLearnMore}
-        title="Learn More"
-        color="#841584"
-        accessibilityLabel="Learn more about this purple button"
-      />
-
+      <PageHeader title='User Information' />
+      <PageBody>
+        <TextField label='First Name' value={userInfo.firstName}  placeholder='Enter your First Name' onChangeValue={(value) => onValueChange('firstName', value)} />
+        <TextField label='Middle Name' value={userInfo.middleName} placeholder='Enter your Middle Name' onChangeValue={(value) => onValueChange('middleName', value)} />
+        <TextField label='Last Name' value={userInfo.lastName} placeholder='Enter your Last Name' onChangeValue={(value) => onValueChange('lastName', value)} />
+        <ButtonField value='Save' onClickButton={onPressLearnMore} />
+      </PageBody>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-  },
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
