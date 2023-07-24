@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     },
     inputFocused: {
         borderWidth: 1,
-        borderColor: '#2980b9'
+        borderColor: '#f39c12'
     },  
     label: {
         paddingBottom: 10,

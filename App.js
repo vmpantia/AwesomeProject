@@ -1,19 +1,29 @@
 import React, { useState } from 'react';
-import { Alert, Button, StatusBar, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert, StyleSheet, View } from 'react-native';
+
+//Components
 import TextField from './components/TextField';
 import PageHeader from './components/PageHeader';
 import PageBody from './components/PageBody';
 import ButtonField from './components/ButtonField';
+import RadioButtonField from './components/RadioButtonField';
 
 export default function App() {
   const [userInfo, setUserInfo] = useState({
     firstName: '',
     middleName: '',
-    lastName: ''
+    lastName: '',
+    gender: '',
+    emailAddress: '',
   });
 
+  const genderSelection = [
+    {label: 'Male', value: 'Male' },
+    {label: 'Female', value: 'Female' }
+  ];
+
   const onPressLearnMore = () => {
-    Alert.alert('Alert Title', userInfo.firstName, [
+    Alert.alert('Alert Title', userInfo.gender, [
       {
         text: 'Cancel',
         onPress: () => console.log('Cancel Pressed'),
@@ -35,6 +45,8 @@ export default function App() {
         <TextField label='First Name' value={userInfo.firstName}  placeholder='Enter your First Name' onChangeValue={(value) => onValueChange('firstName', value)} />
         <TextField label='Middle Name' value={userInfo.middleName} placeholder='Enter your Middle Name' onChangeValue={(value) => onValueChange('middleName', value)} />
         <TextField label='Last Name' value={userInfo.lastName} placeholder='Enter your Last Name' onChangeValue={(value) => onValueChange('lastName', value)} />
+        <RadioButtonField label='Select Gender' value={userInfo.gender} datasource={genderSelection} onClickButton={(value) => onValueChange('gender', value)}/>
+        <TextField type='email-address' label='Email Address' value={userInfo.emailAddress} placeholder='Enter your Email Address' onChangeValue={(value) => onValueChange('emailAddress', value)} />
         <ButtonField value='Save' onClickButton={onPressLearnMore} />
       </PageBody>
     </View>
